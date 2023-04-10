@@ -22,6 +22,7 @@ class EditDataProfile extends GetView<EditDataProfileController> {
             Common.textForm(),
             Common.textForm(),
             Common.textForm(),
+            Common.button(text: "Edit ",color: Colors.red,textcolor: Colors.white),
           ],
         ),
       ),

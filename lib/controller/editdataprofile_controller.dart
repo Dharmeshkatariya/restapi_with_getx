@@ -9,6 +9,17 @@ class EditDataProfileController extends GetxController {
   final idController = TextEditingController();
 
 
+  // emailController.text = updateEmail.value;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    _setValue();
+    super.onInit();
+  }
+  _setValue(){
+
+  }
+
 
   @override
   void dispose() {
