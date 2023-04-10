@@ -12,7 +12,6 @@ class HomeScreen extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
@@ -30,7 +29,6 @@ class HomeScreen extends GetView<HomePageController> {
             children: [
               Expanded(
                 child: ListView.builder(
-                    padding: const EdgeInsets.all(8),
                     itemCount: controller.finalList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return _listData(index);
@@ -40,8 +38,7 @@ class HomeScreen extends GetView<HomePageController> {
           ),
         ),
         onLoading: const Center(child: CircularProgressIndicator()),
-        onEmpty: const  EmptyView(),
-
+        onEmpty: const EmptyView(),
       ),
     );
   }
@@ -49,16 +46,16 @@ class HomeScreen extends GetView<HomePageController> {
   Widget _listData(int index) {
     UserData userData = controller.finalList[index];
     return GestureDetector(
-      onTap: (){
-        Get.toNamed(NameRoutes.profileScreen);
+      onTap: () {
+        Get.toNamed(NameRoutes.profileScreen, arguments: {'id' : userData.id});
       },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.blue.shade100,
           borderRadius: BorderRadius.circular(14),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
             Row(
@@ -76,7 +73,7 @@ class HomeScreen extends GetView<HomePageController> {
                   ],
                 )
               ],
-            )
+            ),
           ],
         ),
       ),

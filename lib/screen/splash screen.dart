@@ -22,7 +22,10 @@ class SplashScreen extends StatelessWidget {
         width: double.infinity,
         color: Colors.black,
         child: const Center(
-          child: Text("Splash screen",style: TextStyle(color: Colors.white60),),
+          child: Text(
+            "Splash screen",
+            style: TextStyle(color: Colors.white60),
+          ),
         ),
       ),
     );

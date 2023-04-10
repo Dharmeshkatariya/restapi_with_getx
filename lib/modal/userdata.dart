@@ -25,16 +25,19 @@ class Data {
 
   late final String color;
   late final String capacity;
+  late final String price;
 
   Data.fromJson(Map<String, dynamic> json) {
     color = json['color'] ?? '';
     capacity = json['capacity'] ?? '';
+    price = json['price'].toString() ??' 0.0';
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['color'] = color;
     _data['capacity'] = capacity;
+    _data['price'] = price;
     return _data;
   }
 }
