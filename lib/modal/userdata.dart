@@ -8,7 +8,7 @@ class UserData {
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    data = Data.fromJson(json['data']  ??{} );
+    data = Data.fromJson(json['data'] ?? {});
   }
 
   Map<String, dynamic> toJson() {
@@ -27,8 +27,8 @@ class Data {
   late final String capacity;
 
   Data.fromJson(Map<String, dynamic> json) {
-    color = json['color']??'';
-    capacity = json['capacity']??'';
+    color = json['color'] ?? '';
+    capacity = json['capacity'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:restapi/controller/homepage_controller.dart';
-import 'package:restapi/modal/clientdata.dart';
+import 'package:restapi/modal/userdata.dart';
 import 'package:restapi/route/nameroute.dart';
 import 'package:restapi/screen/emptyview.dart';
 

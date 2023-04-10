@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:restapi/modal/clientdata.dart';
+import 'package:restapi/modal/userdata.dart';
 
 class HomePageController extends GetxController
     with StateMixin<List<UserData>> {
