@@ -19,7 +19,11 @@ class ProfileScreen extends GetView<ProfileScreenController> {
             label: const Text("Add")),
         appBar: AppBar(
           actions: [
-            GestureDetector(onTap: () {}, child: const Icon(Icons.more_vert)),
+            GestureDetector(
+                onTap: () {
+                  Get.toNamed(NameRoutes.editDataScreen);
+                },
+                child: const Icon(Icons.more_vert)),
             IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
           ],
           centerTitle: true,
@@ -43,12 +47,11 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                       fontSize: 20,
                       color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Expanded(
                     child: ListView.builder(
-                        padding: const EdgeInsets.all(8),
                         itemCount: controller.userList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return _list(index);
@@ -62,7 +65,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
   Widget _list(int index) {
     UserData userData = controller.userList[index];
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.blue.shade100,
@@ -77,6 +80,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              _text(text: userData.id),
               _text(text: userData.name),
               _text(text: userData.data.price),
               _text(text: userData.data.capacity),
@@ -92,7 +96,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
     return Text(
       text,
       style: const TextStyle(
-          fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+          fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
     );
   }
 }
