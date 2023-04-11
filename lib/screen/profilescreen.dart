@@ -1,9 +1,7 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:restapi/modal/userdata.dart';
 import 'package:restapi/route/nameroute.dart';
 import 'package:restapi/screen/emptyview.dart';
 import '../controller/profilescreen_controller.dart';
@@ -13,22 +11,25 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
-            Get.toNamed(NameRoutes.addPostScreen);
+            Get.toNamed(NameRoutes.addPostScreen,arguments: {'isEdit' : false});
           },
         ),
         appBar: AppBar(
           actions: [
             GestureDetector(
               onTap: () {
-                Get.toNamed(NameRoutes.addPostScreen);
+                Get.toNamed(NameRoutes.addPostScreen,arguments: {'isEdit' : true,'userData' : controller.userData});
               },
               child: const Icon(Icons.edit),
             ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+            IconButton(onPressed: () {
+              controller.deleteApi();
+            }, icon: const Icon(Icons.delete)),
           ],
           centerTitle: true,
           backgroundColor: Colors.red,
@@ -54,52 +55,44 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                 const SizedBox(
                   height: 20,
                 ),
-                Expanded(
-                    child: ListView.builder(
-                        itemCount: controller.userList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return _list(index);
-                        })),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.blue.shade100,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            'assets/icon/apple.jpg',
+                            height: 70,
+                            width: 70,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _text(text: controller.userData!.id),
+                              _text(text: controller.userData!.name),
+                              _text(text: controller.userData!.data.price),
+                              _text(text: controller.userData!.data.capacity),
+                              _text(text: controller.userData!.data.color),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
         ));
   }
 
-  Widget _list(int index) {
-    UserData userData = controller.userList[index];
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.blue.shade100,
-      ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(
-                'assets/icon/apple.jpg',
-                height: 70,
-                width: 70,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _text(text: userData.id),
-                  _text(text: userData.name),
-                  _text(text: userData.data.price),
-                  _text(text: userData.data.capacity),
-                  _text(text: userData.data.color),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _text({required String text}) {
     return Text(

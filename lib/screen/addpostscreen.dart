@@ -51,24 +51,14 @@ class AddPostScreen extends GetView<AddPostController> {
                         Common.textForm(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return ' modal type  is required';
+                              return ' capacity  is required';
                             }
                           },
                           controller: controller.modalTypeController,
-                          text: "modal type ",
+                          text: "capacity ",
                           preicon: const Icon(Icons.type_specimen),
                         ),
-                        Common.textForm(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return ' year  is required';
-                            }
-                          },
-                          keyboardType: TextInputType.number,
-                          controller: controller.yearController,
-                          text: "year ",
-                          preicon: const Icon(Icons.calendar_month),
-                        ),
+
                         Common.textForm(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -86,8 +76,9 @@ class AddPostScreen extends GetView<AddPostController> {
                             textcolor: Colors.white,
                             onTap: () {
                               if (_form.currentState!.validate()) {
-                                controller.isUpdate.value = true;
-                                controller.addDataApi();
+                                controller.isEdit.isTrue
+                                    ? controller.updateDataApi()
+                                    : controller.addDataApi();
                               }
                             }),
                       ],

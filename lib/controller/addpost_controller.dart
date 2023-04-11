@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:restapi/modal/userdata.dart';
 import 'package:restapi/utills/constant.dart';
 
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddPostController extends GetxController {
   final mobileNameController = TextEditingController();
@@ -12,7 +12,8 @@ class AddPostController extends GetxController {
   final yearController = TextEditingController();
   final modalTypeController = TextEditingController();
   RxBool isLoading = true.obs;
-  RxBool isUpdate = false.obs;
+
+  RxBool isEdit = false.obs;
 
   @override
   void onInit() {
@@ -48,23 +49,37 @@ class AddPostController extends GetxController {
   updateDataApi() async {
     try {
       final dio = Dio();
-      var url = Constant.apiUrl;
-      var response = await dio.put(url);
-      print(response.data);
+      UserData userData = Get.arguments['userData'];
+      String id = userData.id;
+      var url = "${Constant.apiUrl}/$id";
+      Map<String, dynamic> data1 = {
+        "name": "Apple MacBook Pro 16",
+        "data": {
+          "year": 2019,
+          "price": 2049.99,
+          "CPU model": "Intel Core i9",
+          "Hard disk size": "1 TB",
+          "color": "silver"
+        }
+      };
+      var response = await dio.put(url, data: data1);
     } catch (e) {
       print(e);
     }
   }
 
   _setValue() async {
-    if (isUpdate.value == true) {
-      updateDataApi();
+    if (Get.arguments != null) {
+      isEdit.value = Get.arguments['isEdit'];
+      if (isEdit.isTrue) {
+        UserData userData = Get.arguments['userData'];
+        mobileNameController.text = userData.name;
+        priceController.text = userData.data.price;
+        colorController.text = userData.data.color;
+        modalTypeController.text = userData.data.capacity;
+      }
     }
-
-    mobileNameController.text = mobileNameController.text.trim();
-    priceController.text = priceController.text.trim();
-    colorController.text = colorController.text.trim();
-    modalTypeController.text = modalTypeController.text.trim();
+    update();
   }
 
   @override
