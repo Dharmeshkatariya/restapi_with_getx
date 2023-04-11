@@ -12,16 +12,18 @@ class ProfileScreen extends GetView<ProfileScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+
             onPressed: () {
               Get.toNamed(NameRoutes.addPostScreen);
             },
-            label: const Text("Add")),
+           ),
         appBar: AppBar(
           actions: [
             GestureDetector(
                 onTap: () {
-                  Get.toNamed(NameRoutes.editDataScreen);
+                  Get.toNamed(NameRoutes.addPostScreen);
                 },
                 child: const Icon(Icons.more_vert)),
             IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),

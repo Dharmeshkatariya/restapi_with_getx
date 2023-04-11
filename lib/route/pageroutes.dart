@@ -27,10 +27,6 @@ class PageRoutes {
       page: () => const AddPostScreen(),
       binding: AddPostBinding(),
     ),
-    GetPage(
-      name: NameRoutes.editDataScreen,
-      page: () => const EditDataProfile(),
-      binding: EditDataProfileBinding(),
-    ),
+
   ];
 }

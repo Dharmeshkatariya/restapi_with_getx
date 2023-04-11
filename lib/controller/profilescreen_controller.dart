@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:restapi/modal/userdata.dart';
-import 'package:restapi/utills/constant.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../utills/constant.dart';
 
 class ProfileScreenController extends GetxController
     with StateMixin<List<UserData>> {
@@ -17,6 +19,8 @@ class ProfileScreenController extends GetxController
     super.onInit();
   }
 
+  late UserData userData;
+
   userApi() async {
     try {
       change(userList, status: RxStatus.loading());
@@ -25,19 +29,29 @@ class ProfileScreenController extends GetxController
         id = Get.arguments['id'];
         print(id);
       }
+      final dio = Dio();
 
-      var client = http.Client();
       var url = "${Constant.apiUrl}?id=$id";
-      var uri = Uri.parse(url);
-      var response = await client.get(uri);
-      List<dynamic> uList = jsonDecode(response.body);
+      var response = await dio.get(url);
+      List<dynamic> uList = response.data;
+
       if (response.statusCode == 200) {
+        // userList = uList.map((userMsp) => UserData.fromJson(userMsp)).toList();
         for (int i = 0; i < uList.length; i++) {
           Map<String, dynamic> userMsp = uList[i];
-          UserData userData = UserData.fromJson(userMsp);
+          userData = UserData.fromJson(userMsp);
           userList.add(userData);
         }
-        change(userList, status: userList.isNotEmpty ? RxStatus.success() : RxStatus.empty());
+        var shareP = await SharedPreferences.getInstance();
+        shareP.setString("name", userData.name);
+        shareP.setString("id", userData.id);
+        shareP.setString("price", userData.data.price);
+        shareP.setString("color", userData.data.color);
+        shareP.setString("capacity", userData.data.capacity);
+
+        change(userList,
+            status:
+                userList.isNotEmpty ? RxStatus.success() : RxStatus.empty());
       }
     } catch (e) {
       change(userList, status: RxStatus.empty());

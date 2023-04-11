@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditDataProfileController extends GetxController {
   final mobileNameController = TextEditingController();
@@ -8,7 +9,6 @@ class EditDataProfileController extends GetxController {
   final capacityController = TextEditingController();
   final idController = TextEditingController();
 
-
   // emailController.text = updateEmail.value;
   @override
   void onInit() {
@@ -16,10 +16,21 @@ class EditDataProfileController extends GetxController {
     _setValue();
     super.onInit();
   }
-  _setValue(){
 
+  _setValue() async {
+    var shareP = await SharedPreferences.getInstance();
+    var name = shareP.getString("name");
+    var id = shareP.getString("id");
+    var price = shareP.getString("price");
+    var color = shareP.getString("color");
+    var capacity = shareP.getString("capacity");
+
+    mobileNameController.text = "$name";
+    priceController.text = "$price";
+    colorController.text = "$color";
+    capacityController.text = "$capacity";
+    idController.text = "$id";
   }
-
 
   @override
   void dispose() {

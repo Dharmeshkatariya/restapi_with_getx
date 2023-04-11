@@ -24,19 +24,22 @@ class Common {
     );
   }
 
-  static Widget button({required String text, Color? textcolor, Color? color}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(25),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        text,
-        style: TextStyle(
-            fontWeight: FontWeight.w400, color: textcolor, fontSize: 16),
+  static Widget button({required String text, Color? textcolor, Color? color,GestureTapCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(
+              fontWeight: FontWeight.w400, color: textcolor, fontSize: 16),
+        ),
       ),
     );
   }
