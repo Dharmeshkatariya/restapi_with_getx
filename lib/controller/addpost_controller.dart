@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:restapi/utills/constant.dart';
@@ -13,17 +11,17 @@ class AddPostController extends GetxController {
   final colorController = TextEditingController();
   final yearController = TextEditingController();
   final modalTypeController = TextEditingController();
-
   RxBool isLoading = true.obs;
+  RxBool isUpdate = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    clientDataApi();
-    // _setValue();
+    addDataApi();
+    _setValue();
   }
 
-  clientDataApi() async {
+  addDataApi() async {
     try {
       final dio = Dio();
       var url = Constant.apiUrl;
@@ -47,6 +45,28 @@ class AddPostController extends GetxController {
     }
   }
 
+  updateDataApi() async {
+    try {
+      final dio = Dio();
+      var url = Constant.apiUrl;
+      var response = await dio.put(url);
+      print(response.data);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _setValue() async {
+    if (isUpdate.value == true) {
+      updateDataApi();
+    }
+
+    mobileNameController.text = mobileNameController.text.trim();
+    priceController.text = priceController.text.trim();
+    colorController.text = colorController.text.trim();
+    modalTypeController.text = modalTypeController.text.trim();
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -55,19 +75,5 @@ class AddPostController extends GetxController {
     colorController.dispose();
     modalTypeController.dispose();
     super.dispose();
-  }
-
-  _setValue() async {
-    var shareP = await SharedPreferences.getInstance();
-    var name = shareP.getString("name");
-    var id = shareP.getString("id");
-    var price = shareP.getString("price");
-    var color = shareP.getString("color");
-    var capacity = shareP.getString("capacity");
-
-    mobileNameController.text = "$name";
-    priceController.text = "$price";
-    colorController.text = "$color";
-    modalTypeController.text = "$id";
   }
 }

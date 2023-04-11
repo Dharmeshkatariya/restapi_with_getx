@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:restapi/modal/userdata.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import '../utills/constant.dart';
 
@@ -42,12 +42,7 @@ class ProfileScreenController extends GetxController
           userData = UserData.fromJson(userMsp);
           userList.add(userData);
         }
-        var shareP = await SharedPreferences.getInstance();
-        shareP.setString("name", userData.name);
-        shareP.setString("id", userData.id);
-        shareP.setString("price", userData.data.price);
-        shareP.setString("color", userData.data.color);
-        shareP.setString("capacity", userData.data.capacity);
+
 
         change(userList,
             status:

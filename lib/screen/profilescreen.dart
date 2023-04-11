@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,19 +15,19 @@ class ProfileScreen extends GetView<ProfileScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-
-            onPressed: () {
-              Get.toNamed(NameRoutes.addPostScreen);
-            },
-           ),
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Get.toNamed(NameRoutes.addPostScreen);
+          },
+        ),
         appBar: AppBar(
           actions: [
             GestureDetector(
-                onTap: () {
-                  Get.toNamed(NameRoutes.addPostScreen);
-                },
-                child: const Icon(Icons.more_vert)),
+              onTap: () {
+                Get.toNamed(NameRoutes.addPostScreen);
+              },
+              child: const Icon(Icons.edit),
+            ),
             IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
           ],
           centerTitle: true,
@@ -67,28 +69,33 @@ class ProfileScreen extends GetView<ProfileScreenController> {
   Widget _list(int index) {
     UserData userData = controller.userList[index];
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.blue.shade100,
       ),
-      child: Row(
+      child: Column(
         children: [
-          Image.asset(
-            'assets/icon/apple.jpg',
-            height: 70,
-            width: 70,
-          ),
-          Column(
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _text(text: userData.id),
-              _text(text: userData.name),
-              _text(text: userData.data.price),
-              _text(text: userData.data.capacity),
-              _text(text: userData.data.color),
+              Image.asset(
+                'assets/icon/apple.jpg',
+                height: 70,
+                width: 70,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _text(text: userData.id),
+                  _text(text: userData.name),
+                  _text(text: userData.data.price),
+                  _text(text: userData.data.capacity),
+                  _text(text: userData.data.color),
+                ],
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

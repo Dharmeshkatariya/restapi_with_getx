@@ -86,7 +86,8 @@ class AddPostScreen extends GetView<AddPostController> {
                             textcolor: Colors.white,
                             onTap: () {
                               if (_form.currentState!.validate()) {
-                                controller.clientDataApi();
+                                controller.isUpdate.value = true;
+                                controller.addDataApi();
                               }
                             }),
                       ],
