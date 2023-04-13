@@ -26,13 +26,13 @@ class ProfileScreenController extends GetxController
       }
       final dio = Dio();
 
-      var url = "${Constant.apiUrl}/$id";
+      var url = "${Constant.baseURL}/$id";
       var response = await dio.get(url);
       var uMap = response.data;
 
       if (response.statusCode == 200) {
         // userList = uList.map((userMsp) => UserData.fromJson(userMsp)).toList();
-        // UserData userData = UserData.fromJson(uMap);
+        UserData userData = UserData.fromJson(uMap);
         userData = UserData.fromJson(uMap);
         change(userData,
             status:
@@ -46,7 +46,7 @@ class ProfileScreenController extends GetxController
   deleteApi() async {
     try {
       final dio = Dio();
-      var url = "${Constant.apiUrl}/$id";
+      var url = "${Constant.baseURL}/$id";
       var response = await dio.deleteUri(Uri.parse(url));
       if (response.statusCode == 200) {
 

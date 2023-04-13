@@ -17,16 +17,16 @@ class HomePageController extends GetxController
     try {
       change(finalList, status: RxStatus.loading());
       final dio = Dio();
-      var url = Constant.apiUrl;
+      var url = Constant.baseURL;
       final response = await dio.get(url);
       if (response.statusCode == 200) {
         List<dynamic> uList = response.data;
         finalList = uList.map((userMsp) => UserData.fromJson(userMsp)).toList();
-        // for (int i = 0; i < uList.length; i++) {
-        //   Map<String, dynamic> userMsp = uList[i];
-        //   UserData userData = UserData.fromJson(userMsp);
-        //   finalList.add(userData);
-        // }
+        for (int i = 0; i < uList.length; i++) {
+          Map<String, dynamic> userMsp = uList[i];
+          UserData userData = UserData.fromJson(userMsp);
+          finalList.add(userData);
+        }
         change(finalList,
             status:
                 finalList.isNotEmpty ? RxStatus.success() : RxStatus.empty());

@@ -5,6 +5,8 @@ import 'package:restapi/utills/constant.dart';
 
 import 'package:dio/dio.dart';
 
+import '../api/rest_client.dart';
+
 class AddPostController extends GetxController {
   final mobileNameController = TextEditingController();
   final priceController = TextEditingController();
@@ -21,11 +23,25 @@ class AddPostController extends GetxController {
     addDataApi();
     _setValue();
   }
+  final _restClient = RestClient();
 
+
+  void _getHttp() async {
+    try {
+      isLoading.value = true;
+
+      var response = await _restClient.get(path: 'entries');
+      isLoading.value = false;
+      print(response);
+    } catch (e) {
+      isLoading.value = false;
+      print(e);
+    }
+  }
   addDataApi() async {
     try {
       final dio = Dio();
-      var url = Constant.apiUrl;
+      var url = Constant.baseURL;
       Map<String, dynamic> data12 = {
         "name": mobileNameController.text.trim(),
         "data": {
@@ -51,7 +67,7 @@ class AddPostController extends GetxController {
       final dio = Dio();
       UserData userData = Get.arguments['userData'];
       String id = userData.id;
-      var url = "${Constant.apiUrl}/$id";
+      var url = "${Constant.baseURL}/$id";
       Map<String, dynamic> data1 = {
         "name": "Apple MacBook Pro 16",
         "data": {
