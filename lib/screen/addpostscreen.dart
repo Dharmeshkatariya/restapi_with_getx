@@ -54,11 +54,10 @@ class AddPostScreen extends GetView<AddPostController> {
                               return ' capacity  is required';
                             }
                           },
-                          controller: controller.modalTypeController,
+                          controller: controller.capacityController,
                           text: "capacity ",
                           preicon: const Icon(Icons.type_specimen),
                         ),
-
                         Common.textForm(
                           validator: (value) {
                             if (value == null || value.isEmpty) {

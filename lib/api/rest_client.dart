@@ -22,14 +22,36 @@ class RestClient {
     return _dio.get(path, queryParameters: data).then((value) => value);
   }
 
-
   Future<Response<dynamic>> post({
     required String path,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? queryParameters,
-
   }) {
-    return _dio.post(path, data : data, queryParameters: queryParameters).then((value) => value);
+    return _dio
+        .post(path, data: data, queryParameters: queryParameters)
+        .then((value) => value);
+  }
+
+  Future<Response<dynamic>> update({
+    required String path,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+  }) {
+    return _dio
+        .put(path, data: data, queryParameters: queryParameters)
+        .then((value) => value);
+  }
+
+  Future<Response<dynamic>> delete({
+    required String path,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+  }) {
+    return _dio
+        .delete(path, data: data, queryParameters: queryParameters)
+        .then((value) => value);
   }
 }

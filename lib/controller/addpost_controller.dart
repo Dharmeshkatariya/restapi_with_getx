@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:restapi/modal/userdata.dart';
-import 'package:restapi/utills/constant.dart';
-
-import 'package:dio/dio.dart';
 
 import '../api/rest_client.dart';
 
@@ -11,10 +8,8 @@ class AddPostController extends GetxController {
   final mobileNameController = TextEditingController();
   final priceController = TextEditingController();
   final colorController = TextEditingController();
-  final yearController = TextEditingController();
-  final modalTypeController = TextEditingController();
+  final capacityController = TextEditingController();
   RxBool isLoading = true.obs;
-
   RxBool isEdit = false.obs;
 
   @override
@@ -23,40 +18,23 @@ class AddPostController extends GetxController {
     addDataApi();
     _setValue();
   }
+
   final _restClient = RestClient();
 
-
-  void _getHttp() async {
-    try {
-      isLoading.value = true;
-
-      var response = await _restClient.get(path: 'entries');
-      isLoading.value = false;
-      print(response);
-    } catch (e) {
-      isLoading.value = false;
-      print(e);
-    }
-  }
   addDataApi() async {
     try {
-      final dio = Dio();
-      var url = Constant.baseURL;
       Map<String, dynamic> data12 = {
         "name": mobileNameController.text.trim(),
         "data": {
-          "year": yearController.text.trim(),
+          "year": DateTime.now().microsecond,
           "price": priceController.text.trim(),
-          "CPU model": modalTypeController.text.trim(),
+          "CPU model": capacityController.text.trim(),
           "color": colorController.text.trim(),
         }
       };
-      var response = await dio.post(url, data: data12);
-      print(response.data);
+      var response = await _restClient.post(path: '', data: data12);
       isLoading.value = false;
-      if (response.statusCode == 200) {
-        print('');
-      }
+      if (response.statusCode == 200) {}
     } catch (e) {
       print(e);
     }
@@ -64,21 +42,19 @@ class AddPostController extends GetxController {
 
   updateDataApi() async {
     try {
-      final dio = Dio();
       UserData userData = Get.arguments['userData'];
       String id = userData.id;
-      var url = "${Constant.baseURL}/$id";
-      Map<String, dynamic> data1 = {
-        "name": "Apple MacBook Pro 16",
+      Map<String, dynamic> data = {
+        "name": mobileNameController.text.trim(),
         "data": {
-          "year": 2019,
-          "price": 2049.99,
-          "CPU model": "Intel Core i9",
-          "Hard disk size": "1 TB",
-          "color": "silver"
+          "year": DateTime.now().microsecond,
+          "price": priceController.text.trim(),
+          "CPU model": capacityController.text.trim(),
+          "color": colorController.text.trim(),
         }
       };
-      var response = await dio.put(url, data: data1);
+      var response = await _restClient.update(path: '/$id', data: data);
+      Get.snackbar("success", "post update");
     } catch (e) {
       print(e);
     }
@@ -92,7 +68,7 @@ class AddPostController extends GetxController {
         mobileNameController.text = userData.name;
         priceController.text = userData.data.price;
         colorController.text = userData.data.color;
-        modalTypeController.text = userData.data.capacity;
+        capacityController.text = userData.data.capacity;
       }
     }
     update();
@@ -104,7 +80,7 @@ class AddPostController extends GetxController {
     mobileNameController.dispose();
     priceController.dispose();
     colorController.dispose();
-    modalTypeController.dispose();
+    capacityController.dispose();
     super.dispose();
   }
 }
